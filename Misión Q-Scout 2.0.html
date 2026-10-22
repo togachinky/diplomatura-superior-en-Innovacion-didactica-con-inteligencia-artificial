@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Misión Q-Scout 2.0 · Robótica educativa y pensamiento computacional</title>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#edf1ea;--card:#ffffff;--ink:#16221a;--mute:#4b5b50;--line:#cdd7ca;
+  --green:#6cc424;--green-d:#2d7a08;--dome:#1b2320;--block:#2f7bd6;--block-ink:#fff;--warn:#f2a31b;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0e1411;--card:#17201a;--ink:#e8f1e6;--mute:#a3b4a7;--line:#2b3a2f;--green-d:#8fe145;--dome:#050807;
+}}
+:root[data-theme="dark"]{--bg:#0e1411;--card:#17201a;--ink:#e8f1e6;--mute:#a3b4a7;--line:#2b3a2f;--green-d:#8fe145;--dome:#050807}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Nunito',system-ui,sans-serif;line-height:1.6;font-size:17px}
+h1,h2,h3{font-family:'Chakra Petch',system-ui,sans-serif;line-height:1.15;margin:0}
+a{color:var(--green-d)}
+.wrap{max-width:980px;margin:0 auto;padding:0 20px}
+:focus-visible{outline:3px solid var(--block);outline-offset:2px}
+
+/* HERO */
+.hero{background:var(--dome);color:#e8f1e6;padding:40px 0 0;position:relative;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:end}
+.hero h1{font-size:clamp(2rem,5vw,3.3rem);color:#fff;font-weight:700}
+.hero h1 span{display:block;color:var(--green);font-size:.55em;margin-top:10px;font-weight:500}
+.hero p{color:#b8c9bb;max-width:46ch}
+.meta{display:grid;gap:2px;font-size:.92rem;margin:20px 0 36px;color:#b8c9bb}
+.meta b{color:#fff}
+.robot{width:100%;max-width:420px;justify-self:end}
+.track{height:14px;background:repeating-linear-gradient(90deg,var(--green) 0 36px,transparent 36px 56px);opacity:.9}
+.led{animation:blink 4s infinite steps(1)}
+@keyframes blink{0%,92%{opacity:1}94%,100%{opacity:.15}}
+.wheel{transform-box:fill-box;transform-origin:center}
+
+/* SECCIONES */
+section{padding:48px 0 8px}
+h2{font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:18px;padding-left:16px;border-left:10px solid var(--green)}
+h3{font-size:1.15rem;margin:22px 0 8px}
+p{margin:0 0 12px;max-width:72ch}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px}
+.card h3{margin-top:0}
+.tag{display:inline-block;background:var(--green);color:#10200a;font-weight:800;font-size:.8rem;border-radius:99px;padding:2px 12px;margin-bottom:10px}
+.keys{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.keys span{background:var(--card);border:1px solid var(--line);border-radius:99px;padding:3px 14px;font-size:.88rem}
+
+/* BLOQUES DE CÓDIGO */
+.blocks{display:grid;gap:3px;justify-items:start;margin:8px 0}
+.b{background:var(--block);color:var(--block-ink);font-weight:700;font-size:.92rem;padding:7px 16px;border-radius:8px 8px 8px 3px;font-family:'Chakra Petch',sans-serif}
+.b.ev{background:#f2a31b;color:#2a1a00;border-radius:18px 18px 8px 3px}
+.b.ct{background:#e1862b;color:#2a1400}
+.b.in{margin-left:22px}
+.b.in2{margin-left:44px}
+
+/* PASOS */
+.steps{counter-reset:s;display:grid;gap:12px;padding:0;list-style:none;margin:0}
+.steps li{counter-increment:s;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px 16px 70px;position:relative}
+.steps li::before{content:counter(s);position:absolute;left:16px;top:14px;width:40px;height:40px;border-radius:50%;background:var(--green);color:#10200a;font:700 1.2rem 'Chakra Petch',sans-serif;display:grid;place-items:center}
+.steps b{display:block}
+
+/* TABLAS */
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:16px;background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:.95rem}
+th,td{text-align:left;padding:12px 14px;vertical-align:top;border-bottom:1px solid var(--line)}
+th{background:var(--dome);color:#fff;font-family:'Chakra Petch',sans-serif;font-weight:500}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:800}
+
+.cols{display:grid;gap:16px;grid-template-columns:1fr 1fr}
+.ok{border-top:6px solid var(--green)}
+.no{border-top:6px solid var(--warn)}
+ul{margin:0;padding-left:20px}
+li{margin-bottom:6px}
+.refs li{max-width:80ch}
+footer{margin-top:56px;background:var(--dome);color:#b8c9bb;padding:28px 0;font-size:.9rem}
+footer b{color:#fff}
+
+@media (max-width:760px){
+  .hero .wrap{grid-template-columns:1fr}
+  .robot{justify-self:center;max-width:320px}
+  .cols{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){.led{animation:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <p style="margin-bottom:6px;color:var(--green)">Trabajo Integrador Final · Diplomatura Superior en Innovación Didáctica con Inteligencia Artificial</p>
+      <h1>Robótica educativa y pensamiento computacional
+        <span>Diseño, implementación y mejora de una propuesta didáctica con el robot Q-Scout mediante inteligencia artificial generativa</span>
+      </h1>
+      <div class="meta">
+        <div><b>Autor:</b> Togachinky Daniel Abraham</div>
+        <div><b>Tutora:</b> Jesica Lorena Orrego</div>
+        <div><b>Institución:</b> Centro de Formación Profesional “Rector Vicente Fidel López”</div>
+        <div><b>Fecha:</b> 23/10/26</div>
+      </div>
+    </div>
+
+    <svg class="robot" viewBox="0 0 420 330" role="img" aria-label="Ilustración del robot Q-Scout con cúpula negra, sensor ultrasónico y ruedas">
+      <!-- cúpula -->
+      <path d="M110 150 Q120 60 210 55 Q300 60 310 150Z" fill="#2a3530" stroke="#0a0f0c" stroke-width="3"/>
+      <path d="M135 140 Q145 85 210 80 Q275 85 285 140Z" fill="#46544d" opacity=".45"/>
+      <!-- pantalla LED -->
+      <rect x="170" y="92" width="80" height="44" rx="8" fill="#0a0f0c"/>
+      <g class="led" fill="#6cc424">
+        <rect x="187" y="104" width="10" height="10" rx="2"/><rect x="223" y="104" width="10" height="10" rx="2"/>
+        <rect x="190" y="121" width="6" height="5" rx="2"/><rect x="198" y="124" width="24" height="5" rx="2"/><rect x="224" y="121" width="6" height="5" rx="2"/>
+      </g>
+      <!-- carrocería verde -->
+      <path d="M70 150 H350 L370 255 H50Z" fill="#6cc424" stroke="#3f8c0f" stroke-width="3"/>
+      <rect x="95" y="165" width="230" height="14" rx="7" fill="#58a61c"/>
+      <!-- sensor ultrasónico -->
+      <rect x="135" y="190" width="150" height="50" rx="10" fill="#1b2320"/>
+      <circle cx="175" cy="215" r="17" fill="#c6cdc8" stroke="#6a746e" stroke-width="3"/><circle cx="175" cy="215" r="8" fill="#2a3530"/>
+      <circle cx="245" cy="215" r="17" fill="#c6cdc8" stroke="#6a746e" stroke-width="3"/><circle cx="245" cy="215" r="8" fill="#2a3530"/>
+      <!-- ondas -->
+      <g fill="none" stroke="#6cc424" stroke-width="3" stroke-linecap="round" opacity=".8">
+        <path d="M200 182 q10-10 20 0"/><path d="M190 172 q20-18 40 0"/>
+      </g>
+      <!-- ruedas -->
+      <g class="wheel"><circle cx="85" cy="262" r="40" fill="#161c19"/><circle cx="85" cy="262" r="17" fill="#6cc424"/></g>
+      <g class="wheel"><circle cx="335" cy="262" r="40" fill="#161c19"/><circle cx="335" cy="262" r="17" fill="#6cc424"/></g>
+    </svg>
+  </div>
+  <div class="track" aria-hidden="true"></div>
+</header>
+
+<main class="wrap">
+
+<section id="resumen">
+  <h2>Resumen</h2>
+  <p>Este trabajo presenta el análisis y la mejora de una propuesta de robótica educativa y pensamiento computacional para la asignatura Introducción a la Programación, con estudiantes de 4.º año de educación secundaria.</p>
+  <p>A partir de las dificultades detectadas con el robot Q-Scout (ordenamiento de secuencias, estructuras de control e identificación de fallos), se usó ChatGPT como herramienta de apoyo para refinar consignas, organizar una progresión didáctica con condicionales y bucles, y construir una rúbrica analítica formativa.</p>
+  <div class="keys">
+    <span>robótica educativa</span><span>pensamiento computacional</span><span>introducción a la programación</span><span>estructuras de control</span><span>inteligencia artificial generativa</span><span>evaluación formativa</span>
+  </div>
+</section>
+
+<section id="contexto">
+  <h2>Contexto y necesidad educativa</h2>
+  <p>La propuesta se desarrolla en <b>Introducción a la Programación</b>, 4.º año de secundaria, con unos 20 estudiantes organizados en parejas pedagógicas. Ya superaron la etapa intuitiva del ciclo básico y necesitan desarrollar pensamiento computacional abstracto (Wing, 2006). El Q-Scout, programable por bloques, conecta la lógica abstracta con la ejecución tangible en tiempo real.</p>
+  <h3>Tres dificultades detectadas</h3>
+  <div class="grid">
+    <div class="card"><h3>Pocas estructuras de control eficientes</h3><p>Repetían bloques en secuencias lineales extensas en lugar de usar bucles (mientras, repetir).</p></div>
+    <div class="card"><h3>Lógica condicional insegura</h3><p>Costaba configurar decisiones con sensores ultrasónicos e infrarrojos (si… entonces… sino).</p></div>
+    <div class="card"><h3>Ensayo y error impulsivo</h3><p>Cambiaban bloques al azar en lugar de depurar con hipótesis (Resnick, 2017).</p></div>
+  </div>
+</section>
+
+<section id="marco">
+  <h2>Marco teórico</h2>
+  <div class="grid">
+    <div class="card"><span class="tag">Papert · Zapata-Ros</span><h3>Construccionismo</h3><p>El aprendizaje es más eficaz cuando se construyen objetos tangibles. El Q-Scout es un “objeto para pensar”: el error es retroalimentación inmediata, no un fallo punible.</p></div>
+    <div class="card"><span class="tag">Wing · Brennan &amp; Resnick</span><h3>Pensamiento computacional</h3>
+      <ul><li><b>Descomposición:</b> dividir el recorrido en subprogramas condicionales.</li><li><b>Patrones:</b> detectar tramos repetitivos para usar iteraciones.</li><li><b>Abstracción:</b> modelar el robot sin detalles irrelevantes.</li><li><b>Algoritmos y depuración:</b> instrucciones correctas y errores aislados con método.</li></ul></div>
+    <div class="card"><span class="tag">TPACK · Vygotsky · Jonassen</span><h3>IA generativa y mediación</h3><p>ChatGPT funciona como “andamiaje cognitivo” para el docente: acelera la ideación de consignas, diversifica desafíos y estructura instrumentos de evaluación formativa (Anijovich, 2010).</p></div>
+  </div>
+</section>
+
+<section id="objetivos">
+  <h2>Objetivos</h2>
+  <div class="card" style="margin-bottom:16px"><span class="tag">Objetivo general</span><p style="margin:0">Desarrollar y fortalecer el pensamiento computacional y la lógica algorítmica en 4.º año mediante el diseño, la ejecución y la depuración de programas para el Q-Scout, optimizados con apoyo pedagógico de IA generativa.</p></div>
+  <div class="grid">
+    <div class="card">Implementar estructuras de control condicionales e iterativas en desafíos de navegación autónoma.</div>
+    <div class="card">Desarrollar depuración sistemática basada en el registro previo de hipótesis.</div>
+    <div class="card">Promover el trabajo colaborativo formal con programación en parejas.</div>
+    <div class="card">Integrar críticamente la IA generativa en planificación, consignas y evaluación formativa.</div>
+  </div>
+</section>
+
+<section id="original">
+  <h2>Diseño original (antes de la IA)</h2>
+  <div class="scroll"><table>
+    <tr><th>Elemento</th><th>Descripción</th></tr>
+    <tr><td>Espacio curricular</td><td>Introducción a la Programación (4.º año)</td></tr>
+    <tr><td>Recurso técnico</td><td>Robot Q-Scout y software de bloques</td></tr>
+    <tr><td>Desafío</td><td>Recorrer un circuito con curvas fijas mediante una secuencia de bloques.</td></tr>
+    <tr><td>Metodología</td><td>Trabajo en parejas, en 4 clases.</td></tr>
+    <tr><td>Limitaciones</td><td>Consignas genéricas, sin roles claros en las parejas, depuración por ensayo y error sin registro, y evaluación centrada en si el robot llegaba o no.</td></tr>
+  </table></div>
+</section>
+
+<section id="ia">
+  <h2>Uso de IA: prompts y decisiones</h2>
+  <p>Se usó ChatGPT como asistente pedagógico interactivo, en tres fases.</p>
+  <div class="scroll"><table>
+    <tr><th>Fase</th><th>Prompt utilizado</th><th>Decisión docente</th></tr>
+    <tr><td>1. Consignas y roles</td><td>“Actuá como especialista en didáctica de la programación en secundaria. Rediseña una consigna de robótica para 4.º año con el robot Q-Scout. Incorporá la técnica de Programación en parejas. Divide el desarrollo de software en dos roles distintos en una misma estación de trabajo: el Conductor, que escribe el código, y el Navegador, que revisa el código y planifica con antelación, y exige el uso de condicionales y bucles.”</td><td><b>Aceptado y adaptado.</b> La IA sugirió fichas de rol claras y rotación obligatoria en cada clase.</td></tr>
+    <tr><td>2. Secuencia progresiva</td><td>“Propón una secuencia didáctica de 4 clases para 4.º año (‘Misión Q-Scout 2.0’) enfocada en navegación autónoma con sensor ultrasónico e infrarrojo. Incluí preguntas metacognitivas.”</td><td><b>Aceptado parcialmente.</b> Se ajustaron los tiempos de la IA, irreales para el aula.</td></tr>
+    <tr><td>3. Rúbrica formativa</td><td>“Elabora una rúbrica analítica en formato tabla con 4 niveles (Avanzado, Satisfactorio, En Proceso, Inicial) para evaluar: Lógica Algorítmica, Estructuras de Control, Depuración y Programación en parejas.”</td><td><b>Aceptado.</b> Se incluyeron criterios observables de evaluación formativa.</td></tr>
+  </table></div>
+</section>
+
+<section id="mejorada">
+  <h2>Misión Q-Scout 2.0</h2>
+  <p>La versión mejorada se estructura en cuatro momentos clave.</p>
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr));align-items:start">
+    <ol class="steps">
+      <li><b>Planificación y pseudocódigo</b>Las parejas diagraman el flujo de control en papel antes de encender las computadoras.</li>
+      <li><b>Programación en parejas</b>El Conductor escribe el código; el Navegador revisa la lógica, detecta fallos y consulta documentación.</li>
+      <li><b>Ejecución con sensores en tiempo real</b>El algoritmo lee obstáculos con el sensor ultrasónico y ajusta la dirección de forma autónoma.</li>
+      <li><b>Bitácora de depuración</b>Error observado → hipótesis de causa → bloque modificado → resultado.</li>
+    </ol>
+    <div class="card" aria-label="Ejemplo ilustrativo de bloques">
+      <h3>Así se ve la lógica en bloques</h3>
+      <p style="color:var(--mute);font-size:.9rem">Ejemplo ilustrativo de una estructura con bucle y condicional.</p>
+      <div class="blocks">
+        <div class="b ev">al iniciar</div>
+        <div class="b ct">repetir siempre</div>
+        <div class="b ct in">si distancia &lt; 15 cm entonces</div>
+        <div class="b in2">girar a la derecha</div>
+        <div class="b ct in">sino</div>
+        <div class="b in2">avanzar</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="rubrica">
+  <h2>Rúbrica analítica de evaluación formativa</h2>
+  <div class="scroll"><table>
+    <tr><th>Criterio</th><th>Avanzado (4)</th><th>Satisfactorio (3)</th></tr>
+    <tr><td>Lógica algorítmica</td><td>Diseña algoritmos optimizados con secuencias fluidas y modularizadas.</td><td>Diseña algoritmos funcionales con redundancias menores.</td></tr>
+    <tr><td>Estructuras de control</td><td>Integra correctamente condicionales anidados y bucles eficientes.</td><td>Usa bucles y condicionales correctamente de forma lineal.</td></tr>
+    <tr><td>Depuración de errores</td><td>Registra hipótesis y aísla errores lógicos sistemáticamente.</td><td>Detecta y corrige errores tras varias pruebas ordenadas.</td></tr>
+    <tr><td>Pair programming</td><td>Respeta los roles asignados y rota activamente con comunicación fluida.</td><td>Respeta los roles la mayor parte del tiempo.</td></tr>
+  </table></div>
+</section>
+
+<section id="analisis">
+  <h2>¿Qué mejoró y qué se descartó?</h2>
+  <div class="cols">
+    <div class="card ok"><h3>Mejoró gracias a la IA</h3>
+      <ul><li><b>Claridad didáctica:</b> las consignas pasaron de directivas ambiguas a guías por metas y roles.</li><li><b>Rigor disciplinar:</b> se incorporaron explícitamente bucles y condicionales.</li><li><b>Evaluación transparente:</b> se reemplazó la nota por producto final por una rúbrica analítica formativa.</li></ul></div>
+    <div class="card no"><h3>Se descartó</h3>
+      <ul><li><b>Sugerencias técnicas no compatibles:</b> funciones avanzadas de interrupciones que la interfaz de bloques del Q-Scout no soporta de forma nativa.</li><li><b>Tiempos sobreestimados:</b> la IA proponía 2 clases; el docente amplió la secuencia a 4–6 clases según los ritmos reales del aula.</li></ul></div>
+  </div>
+</section>
+
+<section id="etica">
+  <h2>Reflexión crítica y ética</h2>
+  <p>La IA generativa ofrece grandes oportunidades, pero exige vigilancia epistemológica (Sadin, 2020). No conoce el contexto sociocultural del grupo, así que sus propuestas siempre pasan por el criterio pedagógico del docente. Desde la dimensión ética (UNESCO, 2021):</p>
+  <div class="grid">
+    <div class="card"><h3>Privacidad de datos</h3><p>No se introdujeron datos personales ni nombres de estudiantes en los prompts.</p></div>
+    <div class="card"><h3>Evitar el automatismo</h3><p>No se delegó el diseño curricular a la IA de forma acrítica.</p></div>
+    <div class="card"><h3>Sesgos tecnológicos</h3><p>Se verificaron las sugerencias técnicas para no generar frustración por funciones inexistentes en el hardware.</p></div>
+  </div>
+</section>
+
+<section id="conclusion">
+  <h2>Conclusión y recomendaciones</h2>
+  <p>Integrar ChatGPT como asistente de co-diseño pedagógico permite transformar una actividad tradicional de robótica en una propuesta sólida de <b>Introducción a la Programación para 4.º año</b>: eleva el nivel de abstracción exigido e incorpora estructuras de control e instrumentos de evaluación formativa.</p>
+  <ol class="steps">
+    <li><b>Validar empíricamente</b>Probar “Misión Q-Scout 2.0” en el siguiente ciclo lectivo.</li>
+    <li><b>Mantener la bitácora de depuración</b>Como requisito obligatorio en los proyectos de programación.</li>
+    <li><b>Capacitar a docentes</b>En ingeniería de prompts aplicada a la didáctica de las ciencias de la computación.</li>
+  </ol>
+</section>
+
+<section id="bibliografia">
+  <h2>Bibliografía</h2>
+  <ul class="refs">
+    <li>Anijovich, R. (2010). <i>La evaluación formativa en el aula: Orientaciones para docentes</i>. Paidós.</li>
+    <li>Brennan, K., &amp; Resnick, M. (2012). New frameworks for studying and assessing the development of computational thinking. <i>Proceedings of the 2012 Annual Meeting of the American Educational Research Association</i>, 1-25.</li>
+    <li>Jonassen, D. H. (2000). <i>Computers as mindtools for schools: Engaging critical thinking</i>. Prentice Hall.</li>
+    <li>Mishra, P., &amp; Koehler, M. J. (2006). Technological pedagogical content knowledge: A framework for teacher knowledge. <i>Teachers College Record</i>, 108(6), 1017–1054.</li>
+    <li>Papert, S. (1991). Situating constructionism. En I. Harel &amp; S. Papert (Eds.), <i>Constructionism</i> (pp. 1–11). Ablex Publishing Corporation.</li>
+    <li>Resnick, M. (2017). <i>Lifelong kindergarten: Cultivating creativity through projects, passion, peers, and play</i>. MIT Press.</li>
+    <li>Sadin, É. (2020). <i>La inteligencia artificial o la silicolonización del mundo: La tiranía de los algoritmos</i>. Caja Negra Editora.</li>
+    <li>UNESCO. (2021). <i>Recomendación sobre la ética de la inteligencia artificial</i>. Organización de las Naciones Unidas para la Educación, la Ciencia y la Cultura.</li>
+    <li>Vygotsky, L. S. (1978). <i>Mind in society: The development of higher psychological processes</i>. Harvard University Press.</li>
+    <li>Wing, J. M. (2006). Computational thinking. <i>Communications of the ACM</i>, 49(3), 33–35.</li>
+    <li>Zapata-Ros, M. (2015). Pensamiento computacional: Una tercera competencia clave. <i>RED. Revista de Educación a Distancia</i>, 46, 1–18.</li>
+  </ul>
+</section>
+
+<section id="anexo">
+  <h2>Anexo</h2>
+  <p>Registro fotográfico de la experiencia (exposiciones, aula y Semana Nacional de la Ciencia y la Tecnología) disponible en Instagram:</p>
+  <ul>
+    <li><a href="https://www.instagram.com/p/CxZalTMuJ7R/?img_index=7" rel="noopener">Publicación CxZalTMuJ7R, imagen 7</a></li>
+    <li><a href="https://www.instagram.com/p/CxZalTMuJ7R/?img_index=8" rel="noopener">Publicación CxZalTMuJ7R, imagen 8</a></li>
+    <li><a href="https://www.instagram.com/p/CxZbpf1ufKu/?img_index=2" rel="noopener">Publicación CxZbpf1ufKu, imagen 2</a></li>
+    <li><a href="https://www.instagram.com/p/CxZbpf1ufKu/?img_index=3" rel="noopener">Publicación CxZbpf1ufKu, imagen 3</a></li>
+    <li><a href="https://www.instagram.com/p/CzPusXmun7G/?img_index=2" rel="noopener">Publicación CzPusXmun7G, imagen 2</a></li>
+  </ul>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><b>Tutora:</b> Jesica Lorena Orrego · <b>Profesor:</b> Togachinky Daniel Abraham</div>
+    <div>Diplomatura Superior en Innovación Didáctica con Inteligencia Artificial · AMET Corrientes, Regional VI</div>
+  </div>
+</footer>
+</body>
+</html>
